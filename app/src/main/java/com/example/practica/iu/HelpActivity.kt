@@ -48,7 +48,6 @@ class HelpActivity : ComponentActivity() {
 @Composable
 fun HelpScreen() {
     val context = LocalContext.current
-    val activity = context as? Activity
     
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -56,7 +55,6 @@ fun HelpScreen() {
     val onMenuClick: () -> Unit = {
         val intent = Intent(context, MainActivity::class.java)
         context.startActivity(intent)
-        activity?.finish()
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

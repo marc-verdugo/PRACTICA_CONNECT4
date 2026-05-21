@@ -113,9 +113,33 @@ fun ResultsScreen(
         )
 
         if (isLandscape) {
-            ResultsLandscapeLayout(resultsViewModel, focusRequester, onSendMailClick, onPlayAgainClick, onExitClick, onConfigClick)
+            ResultsLandscapeLayout(
+                dateText = resultsViewModel.dateText,
+                onDateChange = { resultsViewModel.updateDate(it) },
+                logText = resultsViewModel.logText,
+                onLogChange = { resultsViewModel.updateLog(it) },
+                emailText = resultsViewModel.emailText,
+                onEmailChange = { resultsViewModel.updateEmail(it) },
+                fr = focusRequester,
+                onMail = onSendMailClick,
+                onPlay = onPlayAgainClick,
+                onExit = onExitClick,
+                onConfigClick = onConfigClick
+            )
         } else {
-            ResultsPortraitLayout(resultsViewModel, focusRequester, onSendMailClick, onPlayAgainClick, onExitClick, onConfigClick)
+            ResultsPortraitLayout(
+                dateText = resultsViewModel.dateText,
+                onDateChange = { resultsViewModel.updateDate(it) },
+                logText = resultsViewModel.logText,
+                onLogChange = { resultsViewModel.updateLog(it) },
+                emailText = resultsViewModel.emailText,
+                onEmailChange = { resultsViewModel.updateEmail(it) },
+                fr = focusRequester,
+                onMail = onSendMailClick,
+                onPlay = onPlayAgainClick,
+                onExit = onExitClick,
+                onConfigClick = onConfigClick
+            )
         }
     }
 }
@@ -196,7 +220,10 @@ fun ResultsButton(
 
 @Composable
 fun ResultsPortraitLayout(
-    viewModel: ResultsViewModel, fr: FocusRequester,
+    dateText: String, onDateChange: (String) -> Unit,
+    logText: String, onLogChange: (String) -> Unit,
+    emailText: String, onEmailChange: (String) -> Unit,
+    fr: FocusRequester,
     onMail: () -> Unit,
     onPlay: () -> Unit,
     onExit: () -> Unit,
@@ -215,28 +242,28 @@ fun ResultsPortraitLayout(
             Spacer(modifier = Modifier.height(24.dp))
 
             ResultsTextField(
-                viewModel.dateText,
-                { viewModel.dateText = it },
-                stringResource(R.string.ButtonDayAndHour),
-                Modifier.fillMaxWidth().padding(horizontal = 24.dp)
+                value = dateText,
+                onValueChange = onDateChange,
+                label = stringResource(R.string.ButtonDayAndHour),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             ResultsTextField(
-                viewModel.logText,
-                { viewModel.logText = it },
-                stringResource(R.string.ButtonLogs),
-                Modifier.fillMaxWidth().height(120.dp).padding(horizontal = 24.dp)
+                value = logText,
+                onValueChange = onLogChange,
+                label = stringResource(R.string.ButtonLogs),
+                modifier = Modifier.fillMaxWidth().height(120.dp).padding(horizontal = 24.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             ResultsTextField(
-                viewModel.emailText,
-                { viewModel.emailText = it },
-                stringResource(R.string.ButtonDestinationMail),
-                Modifier.fillMaxWidth().padding(horizontal = 24.dp).focusRequester(fr),
+                value = emailText,
+                onValueChange = onEmailChange,
+                label = stringResource(R.string.ButtonDestinationMail),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp).focusRequester(fr),
                 singleLine = true
             )
 
@@ -275,7 +302,10 @@ fun ResultsPortraitLayout(
 
 @Composable
 fun ResultsLandscapeLayout(
-    viewModel: ResultsViewModel, fr: FocusRequester,
+    dateText: String, onDateChange: (String) -> Unit,
+    logText: String, onLogChange: (String) -> Unit,
+    emailText: String, onEmailChange: (String) -> Unit,
+    fr: FocusRequester,
     onMail: () -> Unit,
     onPlay: () -> Unit,
     onExit: () -> Unit,
@@ -295,28 +325,28 @@ fun ResultsLandscapeLayout(
                 modifier = Modifier.weight(0.45f).padding(8.dp)
             ) {
                 ResultsTextField(
-                    viewModel.dateText,
-                    { viewModel.dateText = it },
-                    stringResource(R.string.ButtonDayAndHour),
-                    Modifier.fillMaxWidth()
+                    value = dateText,
+                    onValueChange = onDateChange,
+                    label = stringResource(R.string.ButtonDayAndHour),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 ResultsTextField(
-                    viewModel.logText,
-                    { viewModel.logText = it },
-                    stringResource(R.string.ButtonLogs),
-                    Modifier.fillMaxWidth().height(100.dp)
+                    value = logText,
+                    onValueChange = onLogChange,
+                    label = stringResource(R.string.ButtonLogs),
+                    modifier = Modifier.fillMaxWidth().height(120.dp).padding(horizontal = 24.dp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 ResultsTextField(
-                    viewModel.emailText,
-                    { viewModel.emailText = it },
-                    stringResource(R.string.ButtonDestinationMail),
-                    Modifier.fillMaxWidth().focusRequester(fr),
+                    value = emailText,
+                    onValueChange = onEmailChange,
+                    label = stringResource(R.string.ButtonDestinationMail),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp).focusRequester(fr),
                     singleLine = true
                 )
             }

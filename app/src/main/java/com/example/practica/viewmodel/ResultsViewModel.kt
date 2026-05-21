@@ -14,10 +14,19 @@ import kotlinx.coroutines.launch
 
 class ResultsViewModel(private val repository: GameRepository) : ViewModel() {
     var dateText by mutableStateOf("")
+        private set
     var logText by mutableStateOf("")
+        private set
     var emailText by mutableStateOf("")
+        private set
 
     private var initialized = false
+
+    fun updateDate(newDate: String) { dateText = newDate }
+
+    fun updateLog(newLog: String) { logText = newLog }
+
+    fun updateEmail(newEmail: String) { emailText = newEmail }
 
     fun initData(alias: String, columns: Int, timeLeft: Int, result: String, difficulty: String) {
         if (initialized) return

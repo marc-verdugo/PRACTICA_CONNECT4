@@ -41,6 +41,7 @@ import com.example.practica.viewmodel.GameHistoryViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -134,20 +135,28 @@ fun HistoryScreen(
                 directive = navigator.scaffoldDirective,
                 value = navigator.scaffoldValue,
                 listPane = {
-                    AccessBD(
-                        gameList = gameList,
-                        selectedFilter = currentFilter,
-                        onFilterChange = { nuevoFiltro -> historyViewModel.onFilterChange(nuevoFiltro) },
-                        onItemClick = { record ->
-                            scope.launch {
-                                navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, record)
+                    AnimatedPane {
+                        AccessBD(
+                            gameList = gameList,
+                            selectedFilter = currentFilter,
+                            onFilterChange = { nuevoFiltro ->
+                                historyViewModel.onFilterChange(
+                                    nuevoFiltro
+                                )
+                            },
+                            onItemClick = { record ->
+                                scope.launch {
+                                    navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, record)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 },
                 detailPane = {
-                    val selectedRecord = navigator.currentDestination?.contentKey
-                    DetailReg(record = selectedRecord)
+                    AnimatedPane {
+                        val selectedRecord = navigator.currentDestination?.contentKey
+                        DetailReg(record = selectedRecord)
+                    }
                 }
             )
         }

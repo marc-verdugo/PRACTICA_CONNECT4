@@ -124,10 +124,13 @@ fun ConfigSectionTitle(text: String) {
 }
 
 @Composable
-fun ConfigurationButton(onClick: () -> Unit) {
+fun ConfigurationButton(onClick: () -> Unit, isEnabled: Boolean) {
     Button(
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+        enabled = isEnabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent,
+            disabledContainerColor = Color.Gray.copy(alpha = 0.5f)),
         modifier = Modifier.width(240.dp).height(55.dp).clip(CircleShape).background(Brush.horizontalGradient(listOf(ElectricBlue, NeonCyan))),
         elevation = ButtonDefaults.buttonElevation(4.dp),
         contentPadding = PaddingValues()
@@ -165,6 +168,7 @@ fun ConfigFormContent(
             onValueChange = onAliasChange,
             modifier = Modifier.width(240.dp).padding(start = 10.dp),
             singleLine = true,
+            isError = alias.trim().isEmpty(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = WhiteText, unfocusedTextColor = WhiteText,
                 focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
@@ -267,7 +271,7 @@ fun ConfigPortraitLayout(
             Spacer(modifier = Modifier.height(150.dp))
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                ConfigurationButton(onClick = onStartGame)
+                ConfigurationButton(onClick = onStartGame, isEnabled = alias.trim().isNotEmpty())
             }
             Spacer(modifier = Modifier.height(20.dp))
         }
@@ -301,7 +305,7 @@ fun ConfigLandscapeLayout(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                ConfigurationButton(onClick = onStartGame)
+                ConfigurationButton(onClick = onStartGame, isEnabled = alias.trim().isNotEmpty())
             }
         }
     }

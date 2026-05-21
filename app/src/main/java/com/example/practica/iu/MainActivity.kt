@@ -73,10 +73,9 @@ fun PrincipalScreen(configViewModel: ConfigurationViewModel = viewModel()) {
     val onHelpClick: () -> Unit = {
         val intent = Intent(context, HelpActivity::class.java)
         context.startActivity(intent)
-        activity?.finish()
     }
 
-    val onExitClick: () -> Unit = { activity?.finish() }
+    val onExitClick: () -> Unit = { activity?.finishAffinity() }
 
     val onHistoryClick: () -> Unit = {
         val intent = Intent(context, HistoryActivity::class.java)
