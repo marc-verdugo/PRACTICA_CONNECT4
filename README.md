@@ -1,5 +1,7 @@
 # Conecta 4 - Aplicación Móvil Android
 
+Proyecto realizado por Bruno Verdugo Soria y Marc Verdugo Soria
+
 ## Descripción
 Este proyecto es una aplicación Android del clásico juego **Conecta 4**. Permite jugar partidas personalizadas contra la máquina (IA) con un diseño moderno, fluido y adaptativo.
 
